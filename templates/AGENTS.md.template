@@ -1,0 +1,56 @@
+# Agent Operating Contract — <PROJECT NAME>
+
+> This file is the canonical operating contract for coding agents working in this
+> repository. Codex CLI (and most agent tools) read it as `AGENTS.md`; Claude Code
+> reads the byte-identical copy at `CLAUDE.md`. Edit this file, then
+> `cp AGENTS.md CLAUDE.md` — the pre-commit hook rejects divergence.
+
+## Project facts
+
+- **What this is:** <one paragraph: what the project does and for whom>
+- **Build:** `<command>`
+- **Test:** `<command>` (run before every commit)
+- **Lint/format:** `<command>`
+- **Directory ownership:** <which paths agents may edit freely, which need a human decision, which are generated and must never be hand-edited>
+
+## Hard rules (violating any of these ends the turn)
+
+1. Never push to `<protected remote/branch>` without the release-clean review passing.
+2. Never commit secrets, tokens, or `.env` contents; never weaken `.gitignore`.
+3. <cost cap for paid APIs, if any — e.g. "stop and report if projected spend exceeds $N">
+4. <project-specific: e.g. "never hand-edit files under generated/">
+
+## Session-journal discipline
+
+Every session writes/updates a journal at `sessions/YYYY-MM-DD-HHMM-<slug>.md`
+(template: `templates/session-journal.md`). The journal is written for the *next
+agent*, not for humans. Two modes:
+
+- **THIN** — a governing plan/spec exists: set `Live plan pointer` to its path and
+  append ONE-line milestones (with commit hashes). The plan carries the narrative.
+- **DETAILED** — no governing doc: the journal is the canonical record. Keep
+  Milestones / Decisions / Files touched / Next step sections current.
+
+The `SessionStart` hook points you at the newest journal — read it before acting.
+The `Stop` hook will block once if you end a turn without updating it.
+
+## Self-unblock protocol (before stopping to ask)
+
+1. **Transient failure** (network, rate limit, flaky test): retry up to 3 times.
+2. **Missing dependency/tool:** substitute a documented equivalent and note it.
+3. **Ambiguous requirement:** research the codebase and docs; if still ambiguous,
+   pick the most consistent option, log the assumption in the journal, proceed.
+4. **Hard-rule conflict:** stop. That is what the rules are for.
+
+## Verification
+
+Prefer checks the agent cannot game: run the real test suite, exercise the real
+entry point, diff against golden fixtures. "It compiles" and "looks right" are
+not verification.
+
+## Commit conventions
+
+- Conventional-commit style subjects (`feat:`, `fix:`, `docs:`, ...).
+- Include the agent co-author trailer your runtime emits.
+- Commit at natural checkpoints; never leave the tree dirty at end of turn
+  without saying so in the journal.
