@@ -10,6 +10,8 @@ I've used this pattern across 10+ production and personal repos (5,000+ agent-co
 
 📖 **Start with the guide: [Running Codex CLI and Claude Code in parity](docs/running-codex-and-claude-in-parity.md)**
 
+> **Looking only for session continuity?** The hook copies in this scaffold are retained as a compact parity example. The canonical, installable, tested implementation now lives in [`dctmfoo/session-journal`](https://github.com/dctmfoo/session-journal), including an agent adoption contract, current Codex/Claude hook behavior, secrets guard, and cross-platform CI.
+
 ## What's in the box
 
 ```
