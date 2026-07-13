@@ -44,6 +44,8 @@ What belongs in the contract (see [`templates/AGENTS.md.template`](../templates/
 
 ## 2. Session journals: memory that survives the context window
 
+> This guide preserves the original integrated scaffold. For the maintained standalone discipline, installer, richer pointer/freshness hooks, secrets guard, and adoption workflow, use [`dctmfoo/session-journal`](https://github.com/dctmfoo/session-journal).
+
 Every working session writes a journal to `sessions/YYYY-MM-DD-HHMM-<slug>.md`: what was done, what was decided, and — most importantly — **"next step for a fresh agent."** The journal is written *for the next agent*, not for humans.
 
 Two lifecycle hooks make this self-sustaining, and both runtimes get identical copies:
